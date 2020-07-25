@@ -13,47 +13,21 @@ const DeckListView = ({ navigation }) => {
 
       <TouchableOpacity
         style={styles.primaryButton}
-        onPress={() => navigation.navigate('DeckListView')}
+        onPress={() => navigation.navigate('NewDeck')}
       >
         <Text
         style={styles.buttonText}
-        >Deck List</Text>
+        >Create new Deck</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity
-        style={styles.primaryButton}
-        onPress={() => navigation.navigate('NewDeckView')}
-      >
-        <Text
-        style={styles.buttonText}
-        >New deck</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={styles.primaryButton}
-        onPress={() => navigation.navigate('NewQuestionView')}
-      >
-        <Text
-        style={styles.buttonText}
-        >New question</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={styles.primaryButton}
-        onPress={() => navigation.navigate('SingleDeckView')}
-      >
-        <Text
-        style={styles.buttonText}
-        >Deck</Text>
-      </TouchableOpacity>
 
       <TouchableOpacity
         style={styles.secondaryButton}
-        onPress={() => navigation.navigate('QuizView')}
+        onPress={() => navigation.navigate('Card')}
       >
         <Text
         style={styles.buttonText}
-        >Quiz</Text>
+        >Go to Card</Text>
       </TouchableOpacity>
 
     </View>

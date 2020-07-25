@@ -96,7 +96,7 @@ export default function App() {
           name="SingleDeckView"
           component={SingleDeckView}
           options={{
-            title: 'Deck',
+            title: 'New deck',
             headerStyle: {
               backgroundColor: '#f4511e',
             },

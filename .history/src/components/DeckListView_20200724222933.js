@@ -44,7 +44,7 @@ const DeckListView = ({ navigation }) => {
       >
         <Text
         style={styles.buttonText}
-        >Deck</Text>
+        >New deck</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
