@@ -7,6 +7,7 @@ import DeckListView from "./components/DeckListView";
 import SingleDeckView from "./components/SingleDeckView";
 import NewQuestionView from "./components/NewQuestionView";
 import NewDeckView from "./components/NewDeckView";
+import DeckView from "./components/DeckView";
 import QuizView from "./components/QuizView";
 
 const Stack = createStackNavigator();
@@ -17,8 +18,8 @@ export default function App() {
   const [loadingMessage, setLoadingMessage] = useState('Please wait');
 
   return (
-    <NavigationContainer style={{backgroundColor: 'red'}}>
-      <Stack.Navigator initialRouteName="DeckListView">
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="DeckView">
         <Stack.Screen
           name="Loading"
           component={Loading}
@@ -55,7 +56,19 @@ export default function App() {
           options={{
             title: 'Deck List',
             headerStyle: {
-            backgroundColor: '#ba6b6c',
+              backgroundColor: '#ba6b6c',
+            },
+            headerTintColor: '#000000',
+          }}
+        />
+
+        <Stack.Screen
+          name="DeckView"
+          component={DeckView}
+          options={{
+            title: 'Deck',
+            headerStyle: {
+              backgroundColor: '#ba6b6c',
             },
             headerTintColor: '#000000',
           }}
@@ -67,12 +80,9 @@ export default function App() {
           options={{
             title: 'New deck',
             headerStyle: {
-              backgroundColor: '#f4511e',
+              backgroundColor: '#ba6b6c',
             },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-              fontWeight: 'bold',
-            },
+            headerTintColor: '#000000',
           }}
         />
 
@@ -82,12 +92,9 @@ export default function App() {
           options={{
             title: 'New question',
             headerStyle: {
-              backgroundColor: '#f4511e',
+              backgroundColor: '#ba6b6c',
             },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-              fontWeight: 'bold',
-            },
+            headerTintColor: '#000000',
           }}
         />
 
@@ -97,12 +104,9 @@ export default function App() {
           options={{
             title: 'Deck',
             headerStyle: {
-              backgroundColor: '#f4511e',
+              backgroundColor: '#ba6b6c',
             },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-              fontWeight: 'bold',
-            },
+            headerTintColor: '#000000',
           }}
         />
 
@@ -112,12 +116,9 @@ export default function App() {
           options={{
             title: 'Quiz',
             headerStyle: {
-              backgroundColor: '#f4511e',
+              backgroundColor: '#ba6b6c',
             },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-              fontWeight: 'bold',
-            },
+            headerTintColor: '#000000',
           }}
         />
 

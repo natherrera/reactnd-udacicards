@@ -40,6 +40,15 @@ const DeckListView = ({ navigation }) => {
 
       <TouchableOpacity
         style={styles.primaryButton}
+        onPress={() => navigation.navigate('DeckView')}
+      >
+        <Text
+        style={styles.buttonText}
+        >Deck</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.primaryButton}
         onPress={() => navigation.navigate('SingleDeckView')}
       >
         <Text
@@ -77,7 +86,8 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color:'#fff',
-    textTransform:'uppercase'
+    textTransform:'uppercase',
+    textAlign: 'center'
   },
   section: {
     backgroundColor: 'red'

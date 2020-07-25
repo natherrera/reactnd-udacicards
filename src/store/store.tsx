@@ -8,17 +8,11 @@ import rootReducer from './reducers/index';
 import middleware from './middleware';
 
 const persistConfig = {
-  key: 'root',
+  key: 'UDACICARDS',
   storage: AsyncStorage,
   whitelist: [
-    'deskReducer',
-    'quizReducer',
-    'questionReducer',
+    'deckReducer',
   ],
-//NOTE: REVISAR
-//   blacklist: [
-//     'exampleReducer',
-//   ],
 };
 
 const saga = createSagaMiddleware();

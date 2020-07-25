@@ -1,14 +1,15 @@
 import * as React from 'react';
-import { Button, View, Text } from 'react-native';
+import { Button, View } from 'react-native';
+import { Content, Input, Item } from 'native-base';
 
 export default function QuizView({ navigation }) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Card Screen</Text>
-      <Button
-        title="Go to Details"
-        onPress={() => navigation.navigate('DeckListView')}
-      />
+      <Content>
+          <Item regular>
+            <Input placeholder='Regular Textbox' />
+          </Item>
+        </Content>
     </View>
   );
 }
