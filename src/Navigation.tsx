@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Loading from "./components/shared/Loading";
 import ErrorView from "./components/shared/ErrorView";
-import DeckListView from "./components/DeckListView";
 import SingleDeckView from "./components/SingleDeckView";
 import NewQuestionView from "./components/NewQuestionView";
-import NewDeckView from "./components/NewDeckView";
 import DeckView from "./components/DeckView";
 import QuizView from "./components/QuizView";
 
@@ -14,11 +12,10 @@ const Stack = createStackNavigator();
 
 export default function App() {
 
-  const [isLoading, setIsLoading] = useState(true);
-  const [loadingMessage, setLoadingMessage] = useState('Please wait');
-
   return (
+
     <NavigationContainer>
+
       <Stack.Navigator initialRouteName="DeckView">
         <Stack.Screen
           name="Loading"
@@ -51,38 +48,14 @@ export default function App() {
         />
 
         <Stack.Screen
-          name="DeckListView"
-          component={DeckListView}
-          options={{
-            title: 'Deck List',
-            headerStyle: {
-              backgroundColor: '#ba6b6c',
-            },
-            headerTintColor: '#000000',
-          }}
-        />
-
-        <Stack.Screen
           name="DeckView"
           component={DeckView}
           options={{
             title: 'Deck',
             headerStyle: {
-              backgroundColor: '#ba6b6c',
+              backgroundColor: '#80deea',
             },
-            headerTintColor: '#000000',
-          }}
-        />
-
-        <Stack.Screen
-          name="NewDeckView"
-          component={NewDeckView}
-          options={{
-            title: 'New deck',
-            headerStyle: {
-              backgroundColor: '#ba6b6c',
-            },
-            headerTintColor: '#000000',
+            headerTintColor: '#333333',
           }}
         />
 
@@ -92,9 +65,9 @@ export default function App() {
           options={{
             title: 'New question',
             headerStyle: {
-              backgroundColor: '#ba6b6c',
+              backgroundColor: '#80deea',
             },
-            headerTintColor: '#000000',
+            headerTintColor: '#333333',
           }}
         />
 
@@ -104,9 +77,9 @@ export default function App() {
           options={{
             title: 'Deck',
             headerStyle: {
-              backgroundColor: '#ba6b6c',
+              backgroundColor: '#80deea',
             },
-            headerTintColor: '#000000',
+            headerTintColor: '#333333',
           }}
         />
 
@@ -116,9 +89,9 @@ export default function App() {
           options={{
             title: 'Quiz',
             headerStyle: {
-              backgroundColor: '#ba6b6c',
+              backgroundColor: '#80deea',
             },
-            headerTintColor: '#000000',
+            headerTintColor: '#333333',
           }}
         />
 

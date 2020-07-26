@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   TouchableOpacity,
   View,
@@ -6,22 +6,48 @@ import {
   Text
 } from 'react-native';
 import { Content, Form, Item, Input, Label } from 'native-base';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import DeckAction from '../store/actions/deck';
 
 
-const NewDeckView = ({ navigation }) => {
+
+const NewDeckView  = () : React.ReactElement  => {
+
+  const dispatch = useDispatch();
+  const [ title, setTitle ] = useState('');
+  const [ inputValidation, setInputValidation ] = useState(false);
+
+  function onSubmit()
+    {
+      if (!title) {
+        setInputValidation(true)
+        return;
+      } else {
+        setInputValidation(false)
+
+        dispatch(DeckAction.Action(
+            DeckAction.Type.GET_DECK,
+            { title }
+        ));
+        return;
+      }
+
+    }
+
+
   return (
     <View style={styles.layoutContainer}>
       <Content>
         <Text style={styles.title}>What is the title of your new deck</Text>
           <Form>
-            <Item fixedLabel>
+            <Item fixedLabel error={inputValidation}>
               <Label>Deck Title</Label>
-              <Input />
+              <Input onChangeText={(text) => setTitle(text) }/>
             </Item>
             <View style={styles.buttonContainer}>
               <TouchableOpacity
                 style={styles.primaryButton}
-                onPress={() => navigation.navigate('DeckListView')}
+                onPress={ onSubmit }
               >
                 <Text
                 style={styles.buttonText}
@@ -42,7 +68,7 @@ const styles = StyleSheet.create({
     marginTop: 50
   },
   primaryButton: {
-    backgroundColor: '#ef9a9a',
+    backgroundColor: '#29b6f6',
     margin:10,
     padding:10,
     width:150,

@@ -7,7 +7,7 @@ import NewDeckView from './NewDeckView';
 
 const initialLayout = { width: Dimensions.get('window').width };
 
-export default function TabViewExample() {
+export default function TabDeckView({ navigation }) {
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     { key: 'deck', title: 'DECK' },
@@ -15,8 +15,8 @@ export default function TabViewExample() {
   ]);
 
   const renderScene = SceneMap({
-    deck: DeckListView,
-    newDeck: NewDeckView,
+    deck: () => <DeckListView navigation={navigation} />,
+    newDeck: () => <NewDeckView navigation={navigation} />,
   });
 
   return (
@@ -25,6 +25,7 @@ export default function TabViewExample() {
       renderScene={renderScene}
       onIndexChange={setIndex}
       initialLayout={initialLayout}
+
     >
     </TabView>
   );

@@ -1,28 +1,43 @@
-import {
-  FETCH_DECK,
-  FETCH_DECK_SUCCESS,
-  FETCH_DECK_ERROR,
-  FETCH_QUIZ,
-  FETCH_QUIZ_SUCCESS,
-  FETCH_QUIZ_ERROR,
-  InitState,
-  DeckActionTypes,
-} from '../actions/types/deck'
+import DeckAction from '../actions/deck';
+import { DeckDefaults } from './defaults';
+import { AnyAction } from 'redux';
 
 
-const initialState: InitState = {
-  error: true,
-  loading: true,
-  deck: []
-}
-
-export function deckReducer(
-  state = initialState,
-  action: DeckActionTypes
-): InitState {
+export default function DeckReducer(state: any = DeckDefaults, action: AnyAction ) : any {
   switch (action.type) {
 
-    case FETCH_DECK: {
+    case DeckAction.Type.GET_DECK: {
+
+      return {
+          ...state,
+          loading: true
+      };
+
+    }
+
+    case DeckAction.Type.FETCH_DECK: {
+
+      debugger;
+
+      const { idDeck: id, title } = action.payload;
+
+      return {
+        ...state,
+        error: false,
+        loading: false,
+        decks: {
+          ...state.decks,
+          [id]: {
+            id: id,
+            title: title,
+            cards: 0,
+            quiz: {}
+          }
+        }
+      };
+    }
+
+    case DeckAction.Type.FETCH_DECK_SUCCESS: {
       return {
         ...state,
         error: false,
@@ -30,7 +45,47 @@ export function deckReducer(
       }
     }
 
-    case FETCH_DECK_SUCCESS: {
+    case DeckAction.Type.FETCH_DECK_ERROR: {
+      return {
+        ...state,
+        error: true,
+        loading: false,
+      }
+    }
+
+    case DeckAction.Type.GET_QUIZ: {
+      return {
+        ...state,
+        error: false,
+        loading: true
+      }
+    }
+
+    case DeckAction.Type.FETCH_QUIZ: {
+
+      const { idQuiz } = action.payload;
+      const { deckId, questionQuiz, answerQuiz } = action.payload.payload;
+
+      return {
+        ...state,
+        decks: {
+          [deckId]: {
+            ...state.decks[deckId],
+            count: state.decks[deckId].count + 1,
+            questions: {
+                ...state.decks[deckId].questions,
+                [idQuiz]: {
+                    idQuiz,
+                    questionQuiz,
+                    answerQuiz
+                }
+            }
+          }
+        }
+      }
+    }
+
+    case DeckAction.Type.FETCH_QUIZ_SUCCESS: {
       return {
         ...state,
         error: false,
@@ -38,31 +93,7 @@ export function deckReducer(
       }
     }
 
-    case FETCH_DECK_ERROR: {
-      return {
-        ...state,
-        error: false,
-        loading: false
-      }
-    }
-
-    case FETCH_QUIZ: {
-      return {
-        ...state,
-        error: false,
-        loading: false
-      }
-    }
-
-    case FETCH_QUIZ_SUCCESS: {
-      return {
-        ...state,
-        error: false,
-        loading: false
-      }
-    }
-
-    case FETCH_QUIZ_ERROR: {
+    case DeckAction.Type.FETCH_QUIZ_ERROR: {
       return {
         ...state,
         error: false,
@@ -76,4 +107,3 @@ export function deckReducer(
   }
 };
 
-export default deckReducer;

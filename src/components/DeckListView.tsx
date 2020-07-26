@@ -1,84 +1,66 @@
 import * as React from 'react';
 import {
-  TouchableOpacity,
   View,
   StyleSheet,
-  Text
+  Text,
+  TouchableHighlight,
+  FlatList
 } from 'react-native';
+import { useDispatch, shallowEqual, useSelector, useStore  } from 'react-redux';
+import DeckAction from '../store/actions/deck';
 
 
 const DeckListView = ({ navigation }) => {
+
+  const { decks = {} } = useSelector(
+    state => state[DeckAction.Key],
+    shallowEqual
+  );
+
+  function singleCards(id)
+    {
+        navigation.navigate('SingleDeckView', { id });
+    }
+
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#e1e2e1' }}>
+    <View style={styles.layoutContainer}>
+      {
+          Object.values(decks)
+              .map((d: any) => d && (
 
-      <TouchableOpacity
-        style={styles.primaryButton}
-        onPress={() => navigation.navigate('DeckListView')}
-      >
-        <Text
-        style={styles.buttonText}
-        >Deck List</Text>
-      </TouchableOpacity>
+                    <TouchableHighlight
+                      key={1}
+                      onPress={() => singleCards(d.id)}
+                      style={styles.deckContainer}
+                    >
+                      <View key={ d.id }>
+              <Text style={styles.deckTitle}>{d.title}</Text>
+                        <Text style={styles.deckCardTitle}>{d.count ? d.count : '0'} Cards</Text>
+                      </View>
+                    </TouchableHighlight>
 
-      <TouchableOpacity
-        style={styles.primaryButton}
-        onPress={() => navigation.navigate('NewDeckView')}
-      >
-        <Text
-        style={styles.buttonText}
-        >New deck</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={styles.primaryButton}
-        onPress={() => navigation.navigate('NewQuestionView')}
-      >
-        <Text
-        style={styles.buttonText}
-        >New question</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={styles.primaryButton}
-        onPress={() => navigation.navigate('DeckView')}
-      >
-        <Text
-        style={styles.buttonText}
-        >Deck</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={styles.primaryButton}
-        onPress={() => navigation.navigate('SingleDeckView')}
-      >
-        <Text
-        style={styles.buttonText}
-        >Deck</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={styles.secondaryButton}
-        onPress={() => navigation.navigate('QuizView')}
-      >
-        <Text
-        style={styles.buttonText}
-        >Quiz</Text>
-      </TouchableOpacity>
+              ))
+      }
 
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  layoutContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 50
+  },
   primaryButton: {
-    backgroundColor: '#ef9a9a',
+    backgroundColor: '#29b6f6',
     margin:10,
     padding:10,
     width:150,
     borderRadius:3,
   },
   secondaryButton: {
-    backgroundColor: '#ba6b6c',
+    backgroundColor: '#81d4fa',
     margin:10,
     padding:10,
     width:150,
@@ -89,21 +71,23 @@ const styles = StyleSheet.create({
     textTransform:'uppercase',
     textAlign: 'center'
   },
-  section: {
-    backgroundColor: 'red'
-  },
-  container: {
-    // flex: 1,
-  },
-  item: {
+  deckContainer: {
+    width: 500,
+    borderBottomColor: '#000',
+    borderStyle: 'solid',
+    borderBottomWidth: 1,
+    alignItems: 'center',
     padding: 20,
   },
-  header: {
-    fontSize: 32,
+  deckTitle: {
+    fontSize: 23,
+    fontWeight: 'bold',
+    color: '#333'
   },
-  title: {
-    fontSize: 24
-  }
+  deckCardTitle: {
+    fontSize: 16,
+    color: '#bcbcbc'
+  },
 });
 
 

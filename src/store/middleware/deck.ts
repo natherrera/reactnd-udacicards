@@ -1,42 +1,53 @@
-import { all, call, put, takeLatest } from 'redux-saga/effects';
-import {
-    FETCH_DECK,
-    FETCH_DECK_SUCCESS,
-    FETCH_DECK_ERROR,
-    FETCH_QUIZ,
-    FETCH_QUIZ_SUCCESS,
-    FETCH_QUIZ_ERROR
-} from '../actions/types/deck';
-
-function* addCardToDeck(action) {
-    try {
-       const response = yield put({type: FETCH_QUIZ, action});
-       if (response) {
-        yield put({type: FETCH_DECK_SUCCESS});
-       }
-    } catch (e) {
-       yield put({type: FETCH_QUIZ_ERROR, message: e.message});
-    }
-}
+import { all, put, takeLatest } from 'redux-saga/effects';
+import DeckAction from '../actions/deck';
+import uuid from 'react-native-uuid';
 
 function* saveDeckTitle(action) {
     try {
-       const response = yield put({type: FETCH_DECK, action});
+
+        const deck = {
+            idDeck: uuid.v1(),
+            title: action.payload.title
+        }
+        const response = yield put(DeckAction.Action(DeckAction.Type.FETCH_DECK,deck));
 
        if (response) {
-            yield put({type: FETCH_QUIZ_SUCCESS});
+
+        yield put(DeckAction.Action(DeckAction.Type.FETCH_DECK_SUCCESS));
+
        } else {
-            yield put({type: FETCH_DECK_ERROR, message:'No Response'});
+        yield put(DeckAction.Action(DeckAction.Type.FETCH_DECK_ERROR, 'No response'));
+       }
+
+    } catch (e) {
+       yield put(DeckAction.Action(DeckAction.Type.FETCH_DECK_ERROR, e.message));
+    }
+}
+
+
+function* addCardToDeck(action: any) {
+
+    try {
+        const quiz = {
+            idQuiz: uuid.v1(),
+            ...action
+        }
+       const response = yield put(DeckAction.Action(DeckAction.Type.FETCH_QUIZ,quiz));
+
+       if (response) {
+            yield put(DeckAction.Action(DeckAction.Type.FETCH_QUIZ_SUCCESS));
+       } else {
+            yield put(DeckAction.Action(DeckAction.Type.FETCH_QUIZ_ERROR, 'No response'));
        }
     } catch (e) {
-       yield put({type: FETCH_DECK_ERROR, message: e.message});
+       yield put(DeckAction.Action(DeckAction.Type.FETCH_QUIZ_ERROR, e.message));
     }
 }
 
 export default function* run()
 {
     yield all([
-        yield takeLatest(FETCH_QUIZ, addCardToDeck),
-        yield takeLatest(FETCH_DECK, saveDeckTitle)
+        yield takeLatest(DeckAction.Type.GET_QUIZ, addCardToDeck),
+        yield takeLatest(DeckAction.Type.GET_DECK, saveDeckTitle)
     ]);
 }

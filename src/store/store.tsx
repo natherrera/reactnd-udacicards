@@ -10,9 +10,6 @@ import middleware from './middleware';
 const persistConfig = {
   key: 'UDACICARDS',
   storage: AsyncStorage,
-  whitelist: [
-    'deckReducer',
-  ],
 };
 
 const saga = createSagaMiddleware();
@@ -25,9 +22,9 @@ const store = createStore(
     createLogger(),
     saga
     ),
-    );
+  );
 
-    saga.run(middleware);
+saga.run(middleware);
 let persistor = persistStore(store);
 
 
