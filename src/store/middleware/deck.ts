@@ -1,12 +1,12 @@
 import { all, put, takeLatest } from 'redux-saga/effects';
 import DeckAction from '../actions/deck';
-import uuid from 'react-native-uuid';
+import uuid from 'short-uuid';
 
 function* saveDeckTitle(action) {
     try {
 
         const deck = {
-            idDeck: uuid.v1(),
+            idDeck: uuid.uuid(),
             title: action.payload.title
         }
         const response = yield put(DeckAction.Action(DeckAction.Type.FETCH_DECK,deck));
@@ -29,7 +29,7 @@ function* addCardToDeck(action: any) {
 
     try {
         const quiz = {
-            idQuiz: uuid.v1(),
+            idQuiz: uuid.uuid(),
             ...action
         }
        const response = yield put(DeckAction.Action(DeckAction.Type.FETCH_QUIZ,quiz));

@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { TouchableHighlight,TouchableOpacity,StyleSheet, View, Text } from 'react-native';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 import DeckAction from '../store/actions/deck';
 
 const SingleDeckView = ({ route: { params: { id } }, navigation }) => {
-
-  const dispatch = useDispatch();
 
   const { decks: { [id]: deck } } = useSelector(
         store => store[DeckAction.Key],

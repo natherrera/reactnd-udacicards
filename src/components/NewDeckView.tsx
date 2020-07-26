@@ -1,16 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   TouchableOpacity,
   View,
   StyleSheet,
-  Text
+  Text,
+  TextInput
 } from 'react-native';
-import { Content, Form, Item, Input, Label } from 'native-base';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import DeckAction from '../store/actions/deck';
-import autoMergeLevel1 from 'redux-persist/es/stateReconciler/autoMergeLevel1';
-
-
 
 const NewDeckView  = () : React.ReactElement  => {
 
@@ -40,13 +37,14 @@ const NewDeckView  = () : React.ReactElement  => {
 
   return (
     <View style={styles.layoutContainer}>
-      <Content>
+      <View>
         <Text style={styles.title}>What is the title of your new deck</Text>
-          <Form>
-            <Item fixedLabel error={inputValidation}>
-              <Label>Deck Title</Label>
-              <Input onChangeText={(text) => setTitle(text) }/>
-            </Item>
+            <Text>Deck Title</Text>
+            <TextInput
+              style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+              placeholder="Deck Title"
+              onChangeText={(text) => setTitle(text) }
+            />
             <View style={styles.buttonContainer}>
               <TouchableOpacity
                 style={styles.primaryButton}
@@ -57,9 +55,8 @@ const NewDeckView  = () : React.ReactElement  => {
                 >Submit</Text>
               </TouchableOpacity>
             </View>
-              { successForm && <Text style={styles.messagge}>Great!  {title}  is in your Decks!</Text>}
-          </Form>
-        </Content>
+              { successForm && <Text style={styles.message}>Great!  {title}  is in your Decks!</Text>}
+        </View>
     </View>
   );
 }
@@ -95,7 +92,7 @@ const styles = StyleSheet.create({
     margin: 10,
     color: '#333'
   },
-  messagge: {
+  message: {
     marginLeft: 'auto',
     marginRight: 'auto',
     marginTop: 10,

@@ -3,14 +3,13 @@ import {
   View,
   StyleSheet,
   Text,
-  TouchableHighlight,
-  FlatList
+  TouchableHighlight
 } from 'react-native';
-import { useDispatch, shallowEqual, useSelector, useStore  } from 'react-redux';
+import { shallowEqual, useSelector  } from 'react-redux';
 import DeckAction from '../store/actions/deck';
 
 
-const DeckListView = ({ navigation }) => {
+const DeckMainView = ({ navigation }) => {
 
   const { decks = {} } = useSelector(
     state => state[DeckAction.Key],
@@ -29,13 +28,13 @@ const DeckListView = ({ navigation }) => {
               .map((d: any) => d && (
 
                     <TouchableHighlight
-                      key={1}
+                      key={d.id}
                       onPress={() => singleCards(d.id)}
                       style={styles.deckContainer}
                     >
                       <View key={ d.id } style={{alignItems: 'center'}}>
                         <Text style={styles.deckTitle}>{d.title}</Text>
-                        <Text style={styles.deckCardTitle}>{d.count <= 0 ?  '0' : d.count} Cards</Text>
+                        <Text style={styles.deckCardTitle}>{d.count < 1 ?  '0' : d.count} Cards</Text>
                       </View>
                     </TouchableHighlight>
 
@@ -91,4 +90,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default DeckListView;
+export default DeckMainView;

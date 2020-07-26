@@ -1,5 +1,5 @@
 import { IAction, IActionVault } from './types/deck';
-import uuid from 'react-native-uuid';
+import uuid from 'short-uuid';
 
 export function CreateAction<P>(key: string, type: string, payload?: P): IAction<P>
 {
@@ -27,7 +27,7 @@ export function CreateActionTypes(obj: any): any
     let types = {};
 
     for (const key of obj)
-        types[key] = `${obj[key]}:${uuid.v1()}`;
+        types[key] = `${obj[key]}:${uuid.uuid()}`;
 
     return types;
 }
@@ -53,7 +53,7 @@ export function createActionTypesMirroring(storeKey, array)
 export function MakeUnique(obj: any): any
 {
     for (const key of Object.keys(obj))
-        obj[key] = `${key}:${uuid.v1()}`;
+        obj[key] = `${key}:${uuid.uuid()}`;
 
     return obj;
 }

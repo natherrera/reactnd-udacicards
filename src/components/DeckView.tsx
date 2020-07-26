@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { StyleSheet, Dimensions } from 'react-native';
+import { Dimensions } from 'react-native';
 import { TabView, SceneMap } from 'react-native-tab-view';
-import DeckListView from './DeckListView';
+import DeckMainView from './DeckMainView';
 import NewDeckView from './NewDeckView';
 
 
@@ -15,7 +15,7 @@ export default function TabDeckView({ navigation }) {
   ]);
 
   const renderScene = SceneMap({
-    deck: () => <DeckListView navigation={navigation} />,
+    deck: () => <DeckMainView navigation={navigation} />,
     newDeck: () => <NewDeckView />,
   });
 
@@ -25,7 +25,6 @@ export default function TabDeckView({ navigation }) {
       renderScene={renderScene}
       onIndexChange={setIndex}
       initialLayout={initialLayout}
-
     >
     </TabView>
   );

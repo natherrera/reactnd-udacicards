@@ -28,7 +28,7 @@ export default function DeckReducer(state: any = DeckDefaults, action: AnyAction
           [id]: {
             id: id,
             title: title,
-            cards: 0,
+            count: 0,
             quiz: {}
           }
         }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import {
   TouchableOpacity,
   View,
@@ -6,7 +6,6 @@ import {
   Text
 } from 'react-native';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
-import { Content, Form, Item, Input, Label } from 'native-base';
 import DeckAction from '../store/actions/deck';
 
 
@@ -16,7 +15,7 @@ const QuizView = ({ route: { params: { id } } }) => {
   const [answered, setAnswered] = React.useState(false);
   const [answerResult, setAnswerResult] = React.useState(true);
   const [hasQuiz, setHasQuiz] = React.useState(false);
-  const [question, setQuestion] = React.useState([]);
+
   let questions: any = null;
   let questionAvailable: any = null;
 
@@ -33,10 +32,6 @@ const QuizView = ({ route: { params: { id } } }) => {
   useEffect(() => {
     setHasQuiz(questionAvailable ? true : false)
   });
-
-
-
-
 
 
   function answerQuiz({ answerQuiz, idQuiz }, value: string)
@@ -60,7 +55,7 @@ const QuizView = ({ route: { params: { id } } }) => {
       {
           hasQuiz ? (
 
-                <Content>
+                <View>
                 <View style={styles.titleContainer}>
 
                 { !answered ? <>
@@ -74,8 +69,6 @@ const QuizView = ({ route: { params: { id } } }) => {
                 }
 
                 </View>
-                  <Form>
-
                     <View style={styles.buttonContainer}>
                       <TouchableOpacity
                         style={styles.primaryButton}
@@ -95,8 +88,7 @@ const QuizView = ({ route: { params: { id } } }) => {
                         >Incorrect</Text>
                       </TouchableOpacity>
                     </View>
-                  </Form>
-                </Content>
+                </View>
 
               ) : (
                 <View>

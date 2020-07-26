@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import  React, { useEffect, useState } from 'react';
 import {
   TouchableOpacity,
   View,
   StyleSheet,
-  Text
+  Text,
+  TextInput
 } from 'react-native';
-import { Content, Form, Item, Input, Label, Picker, Icon } from 'native-base';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import DeckAction from '../store/actions/deck';
 
 
@@ -14,46 +14,38 @@ const NewQuestionView = ({ route: { params: { id } } }) : React.ReactElement  =>
 
   const dispatch = useDispatch();
   const [ questionQuiz, setquestionQuiz ] = useState('');
-  const [ answerQuiz, setAnswerQuiz ] = useState('');
+  const [ answerQuiz, setAnswerQuiz ] = useState<string>('');
   const [ questionValidation, setQuestionValidation ] = useState(false);
-  const [ answerValidation, setAnswerValidation ] = useState(false);
 
   function onSubmit()
     {
-      if(!questionQuiz) {setQuestionValidation(true); return};
-      if(!answerQuiz) {setAnswerValidation(true); return};
-
-
       dispatch(DeckAction.Action(
           DeckAction.Type.GET_QUIZ,
           { deckId:id, questionQuiz, answerQuiz }
       ));
     }
 
+
+
   return (
     <View style={styles.layoutContainer}>
-      <Content>
-          <Form>
+      <View>
 
-            <Item stackedLabel error={questionValidation}>
-              <Label>Question</Label>
-              <Input onChangeText={(text) => setquestionQuiz(text) } />
-            </Item>
+            <View>
+              <Text>Question</Text>
+              <TextInput
+                style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+                onChangeText={(text) => setquestionQuiz(text) }
 
-            <Picker
-              mode="dropdown"
-              style={{marginTop:20}}
-              iosIcon={<Icon name="arrow-down" />}
-              placeholder="Select your answer"
-              placeholderStyle={{ color: "#bfc6ea" }}
-              placeholderIconColor="#007aff"
-              onValueChange={(value) => setAnswerQuiz(value) }
-            >
-              <Picker.Item label="Select your answer" value="None" />
-              <Picker.Item label="Correct" value="correct" />
-              <Picker.Item label="Incorrect" value="incorrect" />
+              />
 
-            </Picker>
+              <Text>Answer: (Please write: "correct/incorrect")</Text>
+              <TextInput
+                style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+                onChangeText={(text) => setAnswerQuiz(text) }
+
+              />
+            </View>
 
             <View style={styles.buttonContainer}>
               <TouchableOpacity
@@ -65,8 +57,7 @@ const NewQuestionView = ({ route: { params: { id } } }) : React.ReactElement  =>
                 >Submit</Text>
               </TouchableOpacity>
             </View>
-          </Form>
-        </Content>
+        </View>
     </View>
   );
 }
