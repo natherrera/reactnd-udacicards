@@ -33,9 +33,9 @@ const DeckListView = ({ navigation }) => {
                       onPress={() => singleCards(d.id)}
                       style={styles.deckContainer}
                     >
-                      <View key={ d.id }>
-              <Text style={styles.deckTitle}>{d.title}</Text>
-                        <Text style={styles.deckCardTitle}>{d.count ? d.count : '0'} Cards</Text>
+                      <View key={ d.id } style={{alignItems: 'center'}}>
+                        <Text style={styles.deckTitle}>{d.title}</Text>
+                        <Text style={styles.deckCardTitle}>{d.count <= 0 ?  '0' : d.count} Cards</Text>
                       </View>
                     </TouchableHighlight>
 

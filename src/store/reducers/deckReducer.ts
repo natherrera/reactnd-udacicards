@@ -17,8 +17,6 @@ export default function DeckReducer(state: any = DeckDefaults, action: AnyAction
 
     case DeckAction.Type.FETCH_DECK: {
 
-      debugger;
-
       const { idDeck: id, title } = action.payload;
 
       return {
@@ -61,6 +59,14 @@ export default function DeckReducer(state: any = DeckDefaults, action: AnyAction
       }
     }
 
+    case DeckAction.Type.GET_ANSWER_QUIZ: {
+      return {
+        ...state,
+        error: false,
+        loading: true
+      }
+    }
+
     case DeckAction.Type.FETCH_QUIZ: {
 
       const { idQuiz } = action.payload;
@@ -77,7 +83,8 @@ export default function DeckReducer(state: any = DeckDefaults, action: AnyAction
                 [idQuiz]: {
                     idQuiz,
                     questionQuiz,
-                    answerQuiz
+                    answerQuiz,
+                    available: true
                 }
             }
           }
@@ -98,6 +105,30 @@ export default function DeckReducer(state: any = DeckDefaults, action: AnyAction
         ...state,
         error: false,
         loading: false
+      }
+    }
+
+
+
+    case DeckAction.Type.ANSWER_QUIZ: {
+
+      const { deckId, quizId } = action.payload;
+
+      return {
+        ...state,
+        decks: {
+          [deckId]: {
+            ...state.decks[deckId],
+            count: state.decks[deckId].count - 1,
+            questions: {
+                ...state.decks[deckId].questions,
+                [quizId]: {
+                  ...state.decks[deckId].questions[quizId],
+                  available: false
+                }
+            }
+          }
+        }
       }
     }
 

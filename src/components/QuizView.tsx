@@ -5,54 +5,105 @@ import {
   StyleSheet,
   Text
 } from 'react-native';
+import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 import { Content, Form, Item, Input, Label } from 'native-base';
+import DeckAction from '../store/actions/deck';
 
 
-const QuizView = ({ navigation }) => {
+const QuizView = ({ route: { params: { id } } }) => {
 
+  const dispatch = useDispatch();
   const [answered, setAnswered] = React.useState(false);
-    const [answerResult, setAnswerResult] = React.useState(true);
+  const [answerResult, setAnswerResult] = React.useState(true);
+  const [hasQuiz, setHasQuiz] = React.useState(false);
+  const [question, setQuestion] = React.useState([]);
+  let questions: any = null;
+  let questionAvailable: any = null;
 
+  const { decks: { [id]: deck } } = useSelector(
+    store => store[DeckAction.Key],
+    shallowEqual
+  );
+
+  if (deck.questions) {
+    questions = Object.values(deck.questions);
+    questionAvailable= Object.values(questions).filter((e:any) => e.available)[0];
+  }
+
+  useEffect(() => {
+    setHasQuiz(questionAvailable ? true : false)
+  });
+
+
+
+
+
+
+  function answerQuiz({ answerQuiz, idQuiz }, value: string)
+  {
+    if (answerQuiz === value) {
+      setAnswerResult(true)
+    } else {
+      setAnswerResult(false)
+    }
+
+    setAnswered(true)
+
+    dispatch(DeckAction.Action(
+        DeckAction.Type.ANSWER_QUIZ,
+        { deckId: id, quizId: idQuiz }
+    ));
+  }
 
   return (
     <View style={styles.layoutContainer}>
-      <Content>
-        <View style={styles.titleContainer}>
+      {
+          hasQuiz ? (
 
-        { !answered ? <>
-            <Text style={styles.title}>Does React Native work with Android?</Text>
-            <Text style={styles.text}>Answer</Text>
-          </>
-          : <>
-          <Text style={styles.title}>{answerResult ? 'Yes!' : 'No!'}</Text>
-          <Text style={styles.text}>Question</Text>
-        </>
-        }
+                <Content>
+                <View style={styles.titleContainer}>
 
-        </View>
-          <Form>
+                { !answered ? <>
+                <Text style={styles.title}>{questionAvailable.questionQuiz}</Text>
+                    <Text style={styles.text}>Question</Text>
+                  </>
+                  : <>
+                  <Text style={styles.title}>{answerResult ? 'Yes!' : 'No!'}</Text>
+                  <Text style={styles.text}>Answer</Text>
+                </>
+                }
 
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity
-                style={styles.primaryButton}
-                onPress={() => (setAnswered(true), setAnswerResult(true)) }
-              >
-                <Text
-                style={styles.buttonText}
-                >Correct</Text>
-              </TouchableOpacity>
+                </View>
+                  <Form>
 
-              <TouchableOpacity
-                style={styles.secondaryButton}
-                onPress={() => (setAnswered(true), setAnswerResult(false))}
-              >
-                <Text
-                style={styles.buttonText}
-                >Incorrect</Text>
-              </TouchableOpacity>
-            </View>
-          </Form>
-        </Content>
+                    <View style={styles.buttonContainer}>
+                      <TouchableOpacity
+                        style={styles.primaryButton}
+                        onPress={() => answerQuiz(questionAvailable, 'correct') }
+                      >
+                        <Text
+                        style={styles.buttonText}
+                        >Correct</Text>
+                      </TouchableOpacity>
+
+                      <TouchableOpacity
+                        style={styles.secondaryButton}
+                        onPress={() => answerQuiz(questionAvailable, 'incorrect') }
+                      >
+                        <Text
+                        style={styles.buttonText}
+                        >Incorrect</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </Form>
+                </Content>
+
+              ) : (
+                <View>
+                  <Text>Sorry, you cannot take a quiz because there are no cards in the deck</Text>
+                </View>
+              )}
+
     </View>
   );
 }

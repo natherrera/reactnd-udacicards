@@ -5,7 +5,7 @@ import {
   StyleSheet,
   Text
 } from 'react-native';
-import { Content, Form, Item, Input, Label } from 'native-base';
+import { Content, Form, Item, Input, Label, Picker, Icon } from 'native-base';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import DeckAction from '../store/actions/deck';
 
@@ -22,9 +22,6 @@ const NewQuestionView = ({ route: { params: { id } } }) : React.ReactElement  =>
     {
       if(!questionQuiz) {setQuestionValidation(true); return};
       if(!answerQuiz) {setAnswerValidation(true); return};
-
-      console.log(id, questionQuiz, answerQuiz);
-      debugger;
 
 
       dispatch(DeckAction.Action(
@@ -43,10 +40,20 @@ const NewQuestionView = ({ route: { params: { id } } }) : React.ReactElement  =>
               <Input onChangeText={(text) => setquestionQuiz(text) } />
             </Item>
 
-            <Item stackedLabel error={answerValidation}>
-              <Label>Answer</Label>
-              <Input onChangeText={(text) => setAnswerQuiz(text) } />
-            </Item>
+            <Picker
+              mode="dropdown"
+              style={{marginTop:20}}
+              iosIcon={<Icon name="arrow-down" />}
+              placeholder="Select your answer"
+              placeholderStyle={{ color: "#bfc6ea" }}
+              placeholderIconColor="#007aff"
+              onValueChange={(value) => setAnswerQuiz(value) }
+            >
+              <Picker.Item label="Select your answer" value="None" />
+              <Picker.Item label="Correct" value="correct" />
+              <Picker.Item label="Incorrect" value="incorrect" />
+
+            </Picker>
 
             <View style={styles.buttonContainer}>
               <TouchableOpacity

@@ -17,6 +17,11 @@ const SingleDeckView = ({ route: { params: { id } }, navigation }) => {
       navigation.navigate('NewQuestionView', { id: deck.id, title: deck.title });
   }
 
+  function quizView()
+  {
+    navigation.navigate('QuizView', { id: deck.id });
+  }
+
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
 
@@ -24,7 +29,7 @@ const SingleDeckView = ({ route: { params: { id } }, navigation }) => {
         onPress={() => navigation.navigate('SingleDeckView')}
         style={styles.deckContainer}
       >
-        <View >
+        <View style={{alignItems: 'center'}}>
           <Text style={styles.deckTitle}>{deck.title}</Text>
           <Text style={styles.deckCardTitle}>{deck.count ? deck.count : '0'} Cards</Text>
         </View>
@@ -43,7 +48,7 @@ const SingleDeckView = ({ route: { params: { id } }, navigation }) => {
 
         <TouchableOpacity
           style={styles.secondaryButton}
-          onPress={() => navigation.navigate('QuizView')}
+          onPress={() => quizView()}
         >
           <Text
           style={styles.buttonText}

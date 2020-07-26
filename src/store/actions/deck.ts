@@ -12,6 +12,8 @@ interface DeckActionType {
   readonly FETCH_QUIZ: string;
   readonly FETCH_QUIZ_SUCCESS: string;
   readonly FETCH_QUIZ_ERROR: string;
+  readonly ANSWER_QUIZ: string;
+  readonly GET_ANSWER_QUIZ: string;
 }
 
 export default new ActionVault<DeckActionType, any>(
@@ -27,6 +29,8 @@ export default new ActionVault<DeckActionType, any>(
     FETCH_QUIZ: 'FETCH_QUIZ',
     FETCH_QUIZ_SUCCESS: 'FETCH_QUIZ_SUCCESS',
     FETCH_QUIZ_ERROR: 'FETCH_QUIZ_ERROR',
+    ANSWER_QUIZ: 'ANSWER_QUIZ',
+    GET_ANSWER_QUIZ: 'GET_ANSWER_QUIZ',
 
   }
 )

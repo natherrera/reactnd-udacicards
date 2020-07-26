@@ -8,6 +8,7 @@ import {
 import { Content, Form, Item, Input, Label } from 'native-base';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import DeckAction from '../store/actions/deck';
+import autoMergeLevel1 from 'redux-persist/es/stateReconciler/autoMergeLevel1';
 
 
 
@@ -16,6 +17,7 @@ const NewDeckView  = () : React.ReactElement  => {
   const dispatch = useDispatch();
   const [ title, setTitle ] = useState('');
   const [ inputValidation, setInputValidation ] = useState(false);
+  const [ successForm, setSuccessForm ] = useState(false);
 
   function onSubmit()
     {
@@ -24,6 +26,7 @@ const NewDeckView  = () : React.ReactElement  => {
         return;
       } else {
         setInputValidation(false)
+        setSuccessForm(true)
 
         dispatch(DeckAction.Action(
             DeckAction.Type.GET_DECK,
@@ -54,6 +57,7 @@ const NewDeckView  = () : React.ReactElement  => {
                 >Submit</Text>
               </TouchableOpacity>
             </View>
+              { successForm && <Text style={styles.messagge}>Great!  {title}  is in your Decks!</Text>}
           </Form>
         </Content>
     </View>
@@ -90,6 +94,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     margin: 10,
     color: '#333'
+  },
+  messagge: {
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginTop: 10,
+    padding:10,
+    backgroundColor: '#6ce4c8',
+    color: '#fff'
   }
 });
 

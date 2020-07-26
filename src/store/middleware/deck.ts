@@ -44,10 +44,19 @@ function* addCardToDeck(action: any) {
     }
 }
 
+function* answerQuiz(action: any) {
+
+    const { deckId, quizId } = action.payload;
+
+     yield put(DeckAction.Action(DeckAction.Type.ANSWER_QUIZ,{deckId, quizId}));
+
+}
+
 export default function* run()
 {
     yield all([
         yield takeLatest(DeckAction.Type.GET_QUIZ, addCardToDeck),
-        yield takeLatest(DeckAction.Type.GET_DECK, saveDeckTitle)
+        yield takeLatest(DeckAction.Type.GET_DECK, saveDeckTitle),
+        yield takeLatest(DeckAction.Type.GET_ANSWER_QUIZ, answerQuiz),
     ]);
 }
